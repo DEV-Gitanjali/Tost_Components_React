@@ -8,10 +8,18 @@ const icons ={
   error:<AiOutlineCloseCircle style={iconStyles}/>
 }
 
+const animations ={
+  fade:"fadeIn",
+  pop:"popup",
+  slide:"slideIn",
+};
 
-const Notification =({type="info" , message , onClose=()=>{}})=>{
+
+const Notification =({type="info" , message , onClose=()=>{},
+animation="slide"
+})=>{
   return (
-    <div className={`notification ${type}`}>
+    <div className={`notification ${type} ${animations[animation]}`}>
       {/* icons */}
       {icons[type]}
       {/* message */}

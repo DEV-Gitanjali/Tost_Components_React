@@ -15,6 +15,7 @@ function App() {
         type:"success",
         message:'File Sent Successfully',
         duration:3000,
+        animation:"pop",
       })}>Trigger Sucess</button>
 
       <button onClick={()=> triggrNotification({
