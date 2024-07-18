@@ -1,14 +1,27 @@
-import { useCallback, useState } from "react"
-import Notification from "../components/Notification";
+import React ,{ useCallback, useState } from "react"
+import Notification from "../ts-components/Notification";
 import {v4 as uuidv4} from "uuid";
+ type Position = "botom-left | "bottom-right" | "top-left" | "top-right;
 
+  interface NotificationProps{
+    type: "info" | "success" | "warning" | "error";
+    message: string;
+    duration: number;
+    animation:"fade "
+| "pop"  |  "slide" ;
+ }
 
-const useNotification = (position='top-right') => {
-  const [notifications , setNotifications] = useState([]);
+ interface UseNotificationReturn{
+  NotificationComponent:JSX.Element;
+  triggrNotification:(notificationProps:NotificationProps)=> void;
+ }
+
+const useNotification = (position:Position='top-right'):UseNotificationReturn => {
+  const [notifications , setNotifications] = useState<(NotificationProps  & {id:string})[]>([]);
 
   // let timer;
 
-  const triggrNotification =useCallback((notificationProps)=>{
+  const triggrNotification =useCallback((notificationProps:NotificationProps)=>{
     // clearTimeout(timer)
     const toastId=uuidv4();
     setNotifications((prevNotifications) => [
@@ -24,7 +37,7 @@ const useNotification = (position='top-right') => {
   } , [])
 
 
-const handleNotificationClose = (index)=>{
+const handleNotificationClose = (index :number)=>{
   setNotifications(prevNotifications=>{
     const  updatedNotifications = [...prevNotifications]
     updatedNotifications.splice(index,1)

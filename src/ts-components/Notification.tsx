@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import {useEffect, useRef} from "react";
+import  React, {useEffect, useRef} from "react";
 import {
   AiOutlineCheckCircle,
   AiOutlineInfoCircle,
@@ -10,28 +10,37 @@ import {
 } from "react-icons/ai";
 import "./notification.css";
 
-const iconStyles = {marginRight: "10px"};
-const icons = {
+const iconStyles : React.CSSProperties = {marginRight: "10px"};
+const icons:Record<string , JSX.Element> = {
   success: <AiOutlineCheckCircle style={iconStyles} />,
   info: <AiOutlineInfoCircle style={iconStyles} />,
   warning: <AiOutlineWarning style={iconStyles} />,
   error: <AiOutlineCloseCircle style={iconStyles} />,
 };
 
-const animations = {
+const animations:Record<string , string> = {
   fade: "fadeIn",
   pop: "popup",
   slide: "slideIn",
 };
 
-const Notification = ({
+
+
+interface NotificationProps{
+  type?: "success" | "warning" | "error" | ";
+  message: string;
+  onClose: () => void;
+  animation?: "fade" | "pop" | "slide";
+}
+
+const Notification:React.FC<NotificationProps> = ({
   type = "info",
   message,
   onClose,
   animation = "slide",
 }) => {
   // A11y
-  const notificationRef = useRef(null);
+  const notificationRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (notificationRef.current) {
